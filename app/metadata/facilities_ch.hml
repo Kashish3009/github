@@ -1,0 +1,33 @@
+kind: DataConnectorLink
+version: v1
+definition:
+  name: facilities_ch
+  url:
+    readWriteUrls:
+      read:
+        valueFromEnv: APP_FACILITIES_CH_READ_URL
+      write:
+        valueFromEnv: APP_FACILITIES_CH_WRITE_URL
+  headers:
+    Authorization:
+      valueFromEnv: APP_FACILITIES_CH_AUTHORIZATION_HEADER
+  schema:
+    version: v0.1
+    schema:
+      scalar_types: {}
+      object_types: {}
+      collections: []
+      functions: []
+      procedures: []
+    capabilities:
+      version: 0.1.6
+      capabilities:
+        query:
+          aggregates: {}
+          variables: {}
+          explain: {}
+          nested_fields: {}
+        mutation: {}
+        relationships:
+          relation_comparisons: {}
+          order_by_aggregate: {}

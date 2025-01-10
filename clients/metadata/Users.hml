@@ -1,0 +1,272 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UsersAddress
+  fields:
+    - name: city
+      type: String
+    - name: country
+      type: String
+    - name: postalCode
+      type: String
+    - name: state
+      type: String
+    - name: street
+      type: String
+  graphql:
+    typeName: clientsUsersAddress
+    inputTypeName: clientsUsersAddressInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: clients_mongo
+      dataConnectorObjectType: users_address
+      fieldMapping:
+        city:
+          column:
+            name: city
+        country:
+          column:
+            name: country
+        postalCode:
+          column:
+            name: postal_code
+        state:
+          column:
+            name: state
+        street:
+          column:
+            name: street
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UsersAddress
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - city
+          - country
+          - postalCode
+          - state
+          - street
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Users
+  fields:
+    - name: id
+      type: ObjectId!
+    - name: address
+      type: UsersAddress
+    - name: createdAt
+      type: String
+    - name: email
+      type: String
+    - name: name
+      type: String
+    - name: phone
+      type: String
+    - name: updatedAt
+      type: String
+    - name: userId
+      type: String
+  graphql:
+    typeName: clientsUsers
+    inputTypeName: clientsUsersInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: clients_mongo
+      dataConnectorObjectType: users
+      fieldMapping:
+        id:
+          column:
+            name: _id
+        address:
+          column:
+            name: address
+        createdAt:
+          column:
+            name: created_at
+        email:
+          column:
+            name: email
+        name:
+          column:
+            name: name
+        phone:
+          column:
+            name: phone
+        updatedAt:
+          column:
+            name: updated_at
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Users
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - address
+          - createdAt
+          - email
+          - name
+          - phone
+          - updatedAt
+          - userId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: UsersAddressBoolExp
+  operand:
+    object:
+      type: UsersAddress
+      comparableFields:
+        - fieldName: city
+          booleanExpressionType: StringBoolExp
+        - fieldName: country
+          booleanExpressionType: StringBoolExp
+        - fieldName: postalCode
+          booleanExpressionType: StringBoolExp
+        - fieldName: state
+          booleanExpressionType: StringBoolExp
+        - fieldName: street
+          booleanExpressionType: StringBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: clientsUsersAddressBoolExp
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: UsersBoolExp
+  operand:
+    object:
+      type: Users
+      comparableFields:
+        - fieldName: id
+          booleanExpressionType: ObjectIdBoolExp
+        - fieldName: address
+          booleanExpressionType: UsersAddressBoolExp
+        - fieldName: createdAt
+          booleanExpressionType: StringBoolExp
+        - fieldName: email
+          booleanExpressionType: StringBoolExp
+        - fieldName: name
+          booleanExpressionType: StringBoolExp
+        - fieldName: phone
+          booleanExpressionType: StringBoolExp
+        - fieldName: updatedAt
+          booleanExpressionType: StringBoolExp
+        - fieldName: userId
+          booleanExpressionType: StringBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: clientsUsersBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: UsersAggExp
+  operand:
+    object:
+      aggregatedType: Users
+      aggregatableFields:
+        - fieldName: id
+          aggregateExpression: ObjectIdAggExp
+        - fieldName: createdAt
+          aggregateExpression: StringAggExp
+        - fieldName: email
+          aggregateExpression: StringAggExp
+        - fieldName: name
+          aggregateExpression: StringAggExp
+        - fieldName: phone
+          aggregateExpression: StringAggExp
+        - fieldName: updatedAt
+          aggregateExpression: StringAggExp
+        - fieldName: userId
+          aggregateExpression: StringAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: clientsUsersAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Users
+  objectType: Users
+  source:
+    dataConnectorName: clients_mongo
+    collection: users
+  filterExpressionType: UsersBoolExp
+  aggregateExpression: UsersAggExp
+  orderableFields:
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: address
+      orderByDirections:
+        enableAll: true
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: email
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: phone
+      orderByDirections:
+        enableAll: true
+    - fieldName: updatedAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: clientsusers
+    selectUniques:
+      - queryRootField: clientsusersById
+        uniqueIdentifier:
+          - id
+    orderByExpressionType: clientsUsersOrderBy
+    filterInputTypeName: clientsUsersFilterInput
+    aggregate:
+      queryRootField: clientsusersAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Users
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

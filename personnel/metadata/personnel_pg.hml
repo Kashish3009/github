@@ -1,0 +1,1676 @@
+kind: DataConnectorLink
+version: v1
+definition:
+  name: personnel_pg
+  url:
+    readWriteUrls:
+      read:
+        valueFromEnv: PERSONNEL_PERSONNEL_PG_READ_URL
+      write:
+        valueFromEnv: PERSONNEL_PERSONNEL_PG_WRITE_URL
+  headers:
+    Authorization:
+      valueFromEnv: PERSONNEL_PERSONNEL_PG_AUTHORIZATION_HEADER
+  schema:
+    version: v0.1
+    schema:
+      scalar_types:
+        date:
+          representation:
+            type: date
+          aggregate_functions:
+            max:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: date
+            min:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: date
+          comparison_operators:
+            _eq:
+              type: equal
+            _gt:
+              type: custom
+              argument_type:
+                type: named
+                name: date
+            _gte:
+              type: custom
+              argument_type:
+                type: named
+                name: date
+            _in:
+              type: in
+            _lt:
+              type: custom
+              argument_type:
+                type: named
+                name: date
+            _lte:
+              type: custom
+              argument_type:
+                type: named
+                name: date
+            _neq:
+              type: custom
+              argument_type:
+                type: named
+                name: date
+        int4:
+          representation:
+            type: int32
+          aggregate_functions: {}
+          comparison_operators: {}
+        numeric:
+          representation:
+            type: bigdecimal
+          aggregate_functions:
+            avg:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            max:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            min:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            stddev:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            stddev_pop:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            stddev_samp:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            sum:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            var_pop:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            var_samp:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            variance:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+          comparison_operators:
+            _eq:
+              type: equal
+            _gt:
+              type: custom
+              argument_type:
+                type: named
+                name: numeric
+            _gte:
+              type: custom
+              argument_type:
+                type: named
+                name: numeric
+            _in:
+              type: in
+            _lt:
+              type: custom
+              argument_type:
+                type: named
+                name: numeric
+            _lte:
+              type: custom
+              argument_type:
+                type: named
+                name: numeric
+            _neq:
+              type: custom
+              argument_type:
+                type: named
+                name: numeric
+        text:
+          representation:
+            type: string
+          aggregate_functions:
+            max:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: text
+            min:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: text
+          comparison_operators:
+            _eq:
+              type: equal
+            _gt:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+            _gte:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+            _ilike:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+            _in:
+              type: in
+            _iregex:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+            _like:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+            _lt:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+            _lte:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+            _neq:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+            _nilike:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+            _niregex:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+            _nlike:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+            _nregex:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+            _regex:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+            starts_with:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+            ts_match_tt:
+              type: custom
+              argument_type:
+                type: named
+                name: text
+        timestamp:
+          representation:
+            type: timestamp
+          aggregate_functions:
+            max:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamp
+            min:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamp
+          comparison_operators:
+            _eq:
+              type: equal
+            _gt:
+              type: custom
+              argument_type:
+                type: named
+                name: timestamp
+            _gte:
+              type: custom
+              argument_type:
+                type: named
+                name: timestamp
+            _in:
+              type: in
+            _lt:
+              type: custom
+              argument_type:
+                type: named
+                name: timestamp
+            _lte:
+              type: custom
+              argument_type:
+                type: named
+                name: timestamp
+            _neq:
+              type: custom
+              argument_type:
+                type: named
+                name: timestamp
+        uuid:
+          representation:
+            type: uuid
+          aggregate_functions: {}
+          comparison_operators:
+            _eq:
+              type: equal
+            _gt:
+              type: custom
+              argument_type:
+                type: named
+                name: uuid
+            _gte:
+              type: custom
+              argument_type:
+                type: named
+                name: uuid
+            _in:
+              type: in
+            _lt:
+              type: custom
+              argument_type:
+                type: named
+                name: uuid
+            _lte:
+              type: custom
+              argument_type:
+                type: named
+                name: uuid
+            _neq:
+              type: custom
+              argument_type:
+                type: named
+                name: uuid
+        varchar:
+          representation:
+            type: string
+          aggregate_functions:
+            max:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: text
+            min:
+              result_type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: text
+          comparison_operators:
+            _eq:
+              type: equal
+            _gt:
+              type: custom
+              argument_type:
+                type: named
+                name: varchar
+            _gte:
+              type: custom
+              argument_type:
+                type: named
+                name: varchar
+            _ilike:
+              type: custom
+              argument_type:
+                type: named
+                name: varchar
+            _in:
+              type: in
+            _iregex:
+              type: custom
+              argument_type:
+                type: named
+                name: varchar
+            _like:
+              type: custom
+              argument_type:
+                type: named
+                name: varchar
+            _lt:
+              type: custom
+              argument_type:
+                type: named
+                name: varchar
+            _lte:
+              type: custom
+              argument_type:
+                type: named
+                name: varchar
+            _neq:
+              type: custom
+              argument_type:
+                type: named
+                name: varchar
+            _nilike:
+              type: custom
+              argument_type:
+                type: named
+                name: varchar
+            _niregex:
+              type: custom
+              argument_type:
+                type: named
+                name: varchar
+            _nlike:
+              type: custom
+              argument_type:
+                type: named
+                name: varchar
+            _nregex:
+              type: custom
+              argument_type:
+                type: named
+                name: varchar
+            _regex:
+              type: custom
+              argument_type:
+                type: named
+                name: varchar
+            starts_with:
+              type: custom
+              argument_type:
+                type: named
+                name: varchar
+            ts_match_tt:
+              type: custom
+              argument_type:
+                type: named
+                name: varchar
+      object_types:
+        delete_employees_by_email_response:
+          description: Responses from the 'delete_employees_by_email' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: employees
+        delete_employees_by_employee_id_response:
+          description: Responses from the 'delete_employees_by_employee_id' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: employees
+        delete_payroll_by_payroll_id_response:
+          description: Responses from the 'delete_payroll_by_payroll_id' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: payroll
+        employees:
+          fields:
+            address:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: varchar
+            city:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: varchar
+            country:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: varchar
+            created_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamp
+            department:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: varchar
+            email:
+              type:
+                type: named
+                name: varchar
+            employee_id:
+              type:
+                type: named
+                name: uuid
+            first_name:
+              type:
+                type: named
+                name: varchar
+            hire_date:
+              type:
+                type: named
+                name: date
+            last_name:
+              type:
+                type: named
+                name: varchar
+            location_id:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: uuid
+            phone:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: varchar
+            position:
+              type:
+                type: named
+                name: varchar
+            postal_code:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: varchar
+            state:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: varchar
+            status:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: varchar
+            termination_date:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: date
+            updated_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamp
+        insert_employees_object:
+          fields:
+            address:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: varchar
+            city:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: varchar
+            country:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: varchar
+            created_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamp
+            department:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: varchar
+            email:
+              type:
+                type: named
+                name: varchar
+            employee_id:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: uuid
+            first_name:
+              type:
+                type: named
+                name: varchar
+            hire_date:
+              type:
+                type: named
+                name: date
+            last_name:
+              type:
+                type: named
+                name: varchar
+            location_id:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: uuid
+            phone:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: varchar
+            position:
+              type:
+                type: named
+                name: varchar
+            postal_code:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: varchar
+            state:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: varchar
+            status:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: varchar
+            termination_date:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: date
+            updated_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamp
+        insert_employees_response:
+          description: Responses from the 'insert_employees' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: employees
+        insert_payroll_object:
+          fields:
+            bonuses:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            deductions:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            employee_id:
+              type:
+                type: named
+                name: uuid
+            gross_salary:
+              type:
+                type: named
+                name: numeric
+            net_salary:
+              type:
+                type: named
+                name: numeric
+            pay_period_end:
+              type:
+                type: named
+                name: date
+            pay_period_start:
+              type:
+                type: named
+                name: date
+            payment_date:
+              type:
+                type: named
+                name: date
+            payment_method:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: varchar
+            payroll_id:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: uuid
+            taxes:
+              type:
+                type: named
+                name: numeric
+        insert_payroll_response:
+          description: Responses from the 'insert_payroll' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: payroll
+        payroll:
+          fields:
+            bonuses:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            deductions:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+            employee_id:
+              type:
+                type: named
+                name: uuid
+            gross_salary:
+              type:
+                type: named
+                name: numeric
+            net_salary:
+              type:
+                type: named
+                name: numeric
+            pay_period_end:
+              type:
+                type: named
+                name: date
+            pay_period_start:
+              type:
+                type: named
+                name: date
+            payment_date:
+              type:
+                type: named
+                name: date
+            payment_method:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: varchar
+            payroll_id:
+              type:
+                type: named
+                name: uuid
+            taxes:
+              type:
+                type: named
+                name: numeric
+        update_column_employees_address:
+          description: Update the 'address' column in the 'employees' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: varchar
+        update_column_employees_city:
+          description: Update the 'city' column in the 'employees' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: varchar
+        update_column_employees_country:
+          description: Update the 'country' column in the 'employees' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: varchar
+        update_column_employees_created_at:
+          description: Update the 'created_at' column in the 'employees' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamp
+        update_column_employees_department:
+          description: Update the 'department' column in the 'employees' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: varchar
+        update_column_employees_email:
+          description: Update the 'email' column in the 'employees' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: varchar
+        update_column_employees_employee_id:
+          description: Update the 'employee_id' column in the 'employees' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: uuid
+        update_column_employees_first_name:
+          description: Update the 'first_name' column in the 'employees' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: varchar
+        update_column_employees_hire_date:
+          description: Update the 'hire_date' column in the 'employees' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: date
+        update_column_employees_last_name:
+          description: Update the 'last_name' column in the 'employees' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: varchar
+        update_column_employees_location_id:
+          description: Update the 'location_id' column in the 'employees' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: uuid
+        update_column_employees_phone:
+          description: Update the 'phone' column in the 'employees' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: varchar
+        update_column_employees_position:
+          description: Update the 'position' column in the 'employees' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: varchar
+        update_column_employees_postal_code:
+          description: Update the 'postal_code' column in the 'employees' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: varchar
+        update_column_employees_state:
+          description: Update the 'state' column in the 'employees' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: varchar
+        update_column_employees_status:
+          description: Update the 'status' column in the 'employees' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: varchar
+        update_column_employees_termination_date:
+          description: Update the 'termination_date' column in the 'employees' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: date
+        update_column_employees_updated_at:
+          description: Update the 'updated_at' column in the 'employees' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamp
+        update_column_payroll_bonuses:
+          description: Update the 'bonuses' column in the 'payroll' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+        update_column_payroll_deductions:
+          description: Update the 'deductions' column in the 'payroll' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: numeric
+        update_column_payroll_employee_id:
+          description: Update the 'employee_id' column in the 'payroll' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: uuid
+        update_column_payroll_gross_salary:
+          description: Update the 'gross_salary' column in the 'payroll' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: numeric
+        update_column_payroll_net_salary:
+          description: Update the 'net_salary' column in the 'payroll' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: numeric
+        update_column_payroll_pay_period_end:
+          description: Update the 'pay_period_end' column in the 'payroll' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: date
+        update_column_payroll_pay_period_start:
+          description: Update the 'pay_period_start' column in the 'payroll' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: date
+        update_column_payroll_payment_date:
+          description: Update the 'payment_date' column in the 'payroll' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: date
+        update_column_payroll_payment_method:
+          description: Update the 'payment_method' column in the 'payroll' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: varchar
+        update_column_payroll_payroll_id:
+          description: Update the 'payroll_id' column in the 'payroll' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: uuid
+        update_column_payroll_taxes:
+          description: Update the 'taxes' column in the 'payroll' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: numeric
+        update_employees_by_email_response:
+          description: Responses from the 'update_employees_by_email' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: employees
+        update_employees_by_email_update_columns:
+          description: Update the columns of the 'employees' collection
+          fields:
+            address:
+              description: Update the 'address' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_address
+            city:
+              description: Update the 'city' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_city
+            country:
+              description: Update the 'country' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_country
+            created_at:
+              description: Update the 'created_at' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_created_at
+            department:
+              description: Update the 'department' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_department
+            email:
+              description: Update the 'email' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_email
+            employee_id:
+              description: Update the 'employee_id' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_employee_id
+            first_name:
+              description: Update the 'first_name' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_first_name
+            hire_date:
+              description: Update the 'hire_date' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_hire_date
+            last_name:
+              description: Update the 'last_name' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_last_name
+            location_id:
+              description: Update the 'location_id' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_location_id
+            phone:
+              description: Update the 'phone' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_phone
+            position:
+              description: Update the 'position' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_position
+            postal_code:
+              description: Update the 'postal_code' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_postal_code
+            state:
+              description: Update the 'state' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_state
+            status:
+              description: Update the 'status' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_status
+            termination_date:
+              description: Update the 'termination_date' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_termination_date
+            updated_at:
+              description: Update the 'updated_at' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_updated_at
+        update_employees_by_employee_id_response:
+          description: Responses from the 'update_employees_by_employee_id' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: employees
+        update_employees_by_employee_id_update_columns:
+          description: Update the columns of the 'employees' collection
+          fields:
+            address:
+              description: Update the 'address' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_address
+            city:
+              description: Update the 'city' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_city
+            country:
+              description: Update the 'country' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_country
+            created_at:
+              description: Update the 'created_at' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_created_at
+            department:
+              description: Update the 'department' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_department
+            email:
+              description: Update the 'email' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_email
+            employee_id:
+              description: Update the 'employee_id' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_employee_id
+            first_name:
+              description: Update the 'first_name' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_first_name
+            hire_date:
+              description: Update the 'hire_date' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_hire_date
+            last_name:
+              description: Update the 'last_name' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_last_name
+            location_id:
+              description: Update the 'location_id' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_location_id
+            phone:
+              description: Update the 'phone' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_phone
+            position:
+              description: Update the 'position' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_position
+            postal_code:
+              description: Update the 'postal_code' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_postal_code
+            state:
+              description: Update the 'state' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_state
+            status:
+              description: Update the 'status' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_status
+            termination_date:
+              description: Update the 'termination_date' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_termination_date
+            updated_at:
+              description: Update the 'updated_at' column in the 'employees' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_employees_updated_at
+        update_payroll_by_payroll_id_response:
+          description: Responses from the 'update_payroll_by_payroll_id' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: payroll
+        update_payroll_by_payroll_id_update_columns:
+          description: Update the columns of the 'payroll' collection
+          fields:
+            bonuses:
+              description: Update the 'bonuses' column in the 'payroll' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_payroll_bonuses
+            deductions:
+              description: Update the 'deductions' column in the 'payroll' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_payroll_deductions
+            employee_id:
+              description: Update the 'employee_id' column in the 'payroll' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_payroll_employee_id
+            gross_salary:
+              description: Update the 'gross_salary' column in the 'payroll' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_payroll_gross_salary
+            net_salary:
+              description: Update the 'net_salary' column in the 'payroll' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_payroll_net_salary
+            pay_period_end:
+              description: Update the 'pay_period_end' column in the 'payroll' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_payroll_pay_period_end
+            pay_period_start:
+              description: Update the 'pay_period_start' column in the 'payroll' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_payroll_pay_period_start
+            payment_date:
+              description: Update the 'payment_date' column in the 'payroll' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_payroll_payment_date
+            payment_method:
+              description: Update the 'payment_method' column in the 'payroll' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_payroll_payment_method
+            payroll_id:
+              description: Update the 'payroll_id' column in the 'payroll' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_payroll_payroll_id
+            taxes:
+              description: Update the 'taxes' column in the 'payroll' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_payroll_taxes
+      collections:
+        - name: employees
+          arguments: {}
+          type: employees
+          uniqueness_constraints:
+            employees_email_key:
+              unique_columns:
+                - email
+            employees_pkey:
+              unique_columns:
+                - employee_id
+          foreign_keys: {}
+        - name: payroll
+          arguments: {}
+          type: payroll
+          uniqueness_constraints:
+            payroll_pkey:
+              unique_columns:
+                - payroll_id
+          foreign_keys:
+            payroll_employee_id_fkey:
+              column_mapping:
+                employee_id: employee_id
+              foreign_collection: employees
+      functions: []
+      procedures:
+        - name: delete_employees_by_email
+          description: Delete any row on the 'employees' collection using the 'email' key
+          arguments:
+            key_email:
+              type:
+                type: named
+                name: varchar
+            pre_check:
+              description: Delete permission predicate over the 'employees' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: employees
+          result_type:
+            type: named
+            name: delete_employees_by_email_response
+        - name: delete_employees_by_employee_id
+          description: Delete any row on the 'employees' collection using the 'employee_id' key
+          arguments:
+            key_employee_id:
+              type:
+                type: named
+                name: uuid
+            pre_check:
+              description: Delete permission predicate over the 'employees' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: employees
+          result_type:
+            type: named
+            name: delete_employees_by_employee_id_response
+        - name: delete_payroll_by_payroll_id
+          description: Delete any row on the 'payroll' collection using the 'payroll_id' key
+          arguments:
+            key_payroll_id:
+              type:
+                type: named
+                name: uuid
+            pre_check:
+              description: Delete permission predicate over the 'payroll' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: payroll
+          result_type:
+            type: named
+            name: delete_payroll_by_payroll_id_response
+        - name: insert_employees
+          description: Insert into the employees table
+          arguments:
+            objects:
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: insert_employees_object
+            post_check:
+              description: Insert permission predicate over the 'employees' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: employees
+          result_type:
+            type: named
+            name: insert_employees_response
+        - name: insert_payroll
+          description: Insert into the payroll table
+          arguments:
+            objects:
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: insert_payroll_object
+            post_check:
+              description: Insert permission predicate over the 'payroll' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: payroll
+          result_type:
+            type: named
+            name: insert_payroll_response
+        - name: update_employees_by_email
+          description: Update any row on the 'employees' collection using the 'email' key
+          arguments:
+            key_email:
+              type:
+                type: named
+                name: varchar
+            post_check:
+              description: Update permission post-condition predicate over the 'employees' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: employees
+            pre_check:
+              description: Update permission pre-condition predicate over the 'employees' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: employees
+            update_columns:
+              type:
+                type: named
+                name: update_employees_by_email_update_columns
+          result_type:
+            type: named
+            name: update_employees_by_email_response
+        - name: update_employees_by_employee_id
+          description: Update any row on the 'employees' collection using the 'employee_id' key
+          arguments:
+            key_employee_id:
+              type:
+                type: named
+                name: uuid
+            post_check:
+              description: Update permission post-condition predicate over the 'employees' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: employees
+            pre_check:
+              description: Update permission pre-condition predicate over the 'employees' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: employees
+            update_columns:
+              type:
+                type: named
+                name: update_employees_by_employee_id_update_columns
+          result_type:
+            type: named
+            name: update_employees_by_employee_id_response
+        - name: update_payroll_by_payroll_id
+          description: Update any row on the 'payroll' collection using the 'payroll_id' key
+          arguments:
+            key_payroll_id:
+              type:
+                type: named
+                name: uuid
+            post_check:
+              description: Update permission post-condition predicate over the 'payroll' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: payroll
+            pre_check:
+              description: Update permission pre-condition predicate over the 'payroll' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: payroll
+            update_columns:
+              type:
+                type: named
+                name: update_payroll_by_payroll_id_update_columns
+          result_type:
+            type: named
+            name: update_payroll_by_payroll_id_response
+    capabilities:
+      version: 0.1.6
+      capabilities:
+        query:
+          aggregates: {}
+          variables: {}
+          explain: {}
+          nested_fields:
+            filter_by: {}
+            order_by: {}
+          exists:
+            nested_collections: {}
+        mutation:
+          transactional: {}
+          explain: {}
+        relationships:
+          relation_comparisons: {}
+          order_by_aggregate: {}

@@ -1,0 +1,20 @@
+kind: Subgraph
+version: v2
+definition:
+  name: clients
+  generator:
+    rootPath: .
+    graphqlRootFieldPrefix: clients
+    graphqlTypeNamePrefix: clients
+  includePaths:
+    - metadata
+  envMapping:
+    CLIENTS_CLIENTS_MONGO_AUTHORIZATION_HEADER:
+      fromEnv: CLIENTS_CLIENTS_MONGO_AUTHORIZATION_HEADER
+    CLIENTS_CLIENTS_MONGO_READ_URL:
+      fromEnv: CLIENTS_CLIENTS_MONGO_READ_URL
+    CLIENTS_CLIENTS_MONGO_WRITE_URL:
+      fromEnv: CLIENTS_CLIENTS_MONGO_WRITE_URL
+  connectors:
+    - path: connector/clients_mongo/connector.yaml
+      connectorLinkName: clients_mongo

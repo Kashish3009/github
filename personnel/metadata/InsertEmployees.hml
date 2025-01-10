@@ -1,0 +1,204 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertEmployeesObject
+  fields:
+    - name: address
+      type: Varchar
+    - name: city
+      type: Varchar
+    - name: country
+      type: Varchar
+    - name: createdAt
+      type: Timestamp
+    - name: department
+      type: Varchar
+    - name: email
+      type: Varchar!
+    - name: employeeId
+      type: Uuid
+    - name: firstName
+      type: Varchar!
+    - name: hireDate
+      type: Date!
+    - name: lastName
+      type: Varchar!
+    - name: locationId
+      type: Uuid
+    - name: phone
+      type: Varchar
+    - name: position
+      type: Varchar!
+    - name: postalCode
+      type: Varchar
+    - name: state
+      type: Varchar
+    - name: status
+      type: Varchar
+    - name: terminationDate
+      type: Date
+    - name: updatedAt
+      type: Timestamp
+  graphql:
+    typeName: personnelInsertEmployeesObject
+    inputTypeName: personnelInsertEmployeesObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: personnel_pg
+      dataConnectorObjectType: insert_employees_object
+      fieldMapping:
+        address:
+          column:
+            name: address
+        city:
+          column:
+            name: city
+        country:
+          column:
+            name: country
+        createdAt:
+          column:
+            name: created_at
+        department:
+          column:
+            name: department
+        email:
+          column:
+            name: email
+        employeeId:
+          column:
+            name: employee_id
+        firstName:
+          column:
+            name: first_name
+        hireDate:
+          column:
+            name: hire_date
+        lastName:
+          column:
+            name: last_name
+        locationId:
+          column:
+            name: location_id
+        phone:
+          column:
+            name: phone
+        position:
+          column:
+            name: position
+        postalCode:
+          column:
+            name: postal_code
+        state:
+          column:
+            name: state
+        status:
+          column:
+            name: status
+        terminationDate:
+          column:
+            name: termination_date
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertEmployeesObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - address
+          - city
+          - country
+          - createdAt
+          - department
+          - email
+          - employeeId
+          - firstName
+          - hireDate
+          - lastName
+          - locationId
+          - phone
+          - position
+          - postalCode
+          - state
+          - status
+          - terminationDate
+          - updatedAt
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertEmployeesResponse
+  description: Responses from the 'insert_employees' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[Employees!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: personnelInsertEmployeesResponse
+    inputTypeName: personnelInsertEmployeesResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: personnel_pg
+      dataConnectorObjectType: insert_employees_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertEmployeesResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertEmployees
+  outputType: InsertEmployeesResponse!
+  arguments:
+    - name: objects
+      type: "[InsertEmployeesObject!]!"
+    - name: postCheck
+      type: EmployeesBoolExp
+      description: Insert permission predicate over the 'employees' collection
+  source:
+    dataConnectorName: personnel_pg
+    dataConnectorCommand:
+      procedure: insert_employees
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: personnelinsertEmployees
+    rootFieldKind: Mutation
+  description: Insert into the employees table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertEmployees
+  permissions:
+    - role: admin
+      allowExecution: true
+

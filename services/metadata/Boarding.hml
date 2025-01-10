@@ -1,0 +1,193 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Boarding
+  fields:
+    - name: id
+      type: ObjectId!
+    - name: boardingId
+      type: String
+    - name: checkInDate
+      type: String
+    - name: checkOutDate
+      type: String
+    - name: dogId
+      type: String
+    - name: specialInstructions
+      type: String
+    - name: status
+      type: String
+    - name: userId
+      type: String
+  graphql:
+    typeName: servicesBoarding
+    inputTypeName: servicesBoardingInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: services_mongo
+      dataConnectorObjectType: boarding
+      fieldMapping:
+        id:
+          column:
+            name: _id
+        boardingId:
+          column:
+            name: boarding_id
+        checkInDate:
+          column:
+            name: check_in_date
+        checkOutDate:
+          column:
+            name: check_out_date
+        dogId:
+          column:
+            name: dog_id
+        specialInstructions:
+          column:
+            name: special_instructions
+        status:
+          column:
+            name: status
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Boarding
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - boardingId
+          - checkInDate
+          - checkOutDate
+          - dogId
+          - specialInstructions
+          - status
+          - userId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: BoardingBoolExp
+  operand:
+    object:
+      type: Boarding
+      comparableFields:
+        - fieldName: id
+          booleanExpressionType: ObjectIdBoolExp
+        - fieldName: boardingId
+          booleanExpressionType: StringBoolExp
+        - fieldName: checkInDate
+          booleanExpressionType: StringBoolExp
+        - fieldName: checkOutDate
+          booleanExpressionType: StringBoolExp
+        - fieldName: dogId
+          booleanExpressionType: StringBoolExp
+        - fieldName: specialInstructions
+          booleanExpressionType: StringBoolExp
+        - fieldName: status
+          booleanExpressionType: StringBoolExp
+        - fieldName: userId
+          booleanExpressionType: StringBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: servicesBoardingBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: BoardingAggExp
+  operand:
+    object:
+      aggregatedType: Boarding
+      aggregatableFields:
+        - fieldName: id
+          aggregateExpression: ObjectIdAggExp
+        - fieldName: boardingId
+          aggregateExpression: StringAggExp
+        - fieldName: checkInDate
+          aggregateExpression: StringAggExp
+        - fieldName: checkOutDate
+          aggregateExpression: StringAggExp
+        - fieldName: dogId
+          aggregateExpression: StringAggExp
+        - fieldName: specialInstructions
+          aggregateExpression: StringAggExp
+        - fieldName: status
+          aggregateExpression: StringAggExp
+        - fieldName: userId
+          aggregateExpression: StringAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: servicesBoardingAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Boarding
+  objectType: Boarding
+  source:
+    dataConnectorName: services_mongo
+    collection: boarding
+  filterExpressionType: BoardingBoolExp
+  aggregateExpression: BoardingAggExp
+  orderableFields:
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: boardingId
+      orderByDirections:
+        enableAll: true
+    - fieldName: checkInDate
+      orderByDirections:
+        enableAll: true
+    - fieldName: checkOutDate
+      orderByDirections:
+        enableAll: true
+    - fieldName: dogId
+      orderByDirections:
+        enableAll: true
+    - fieldName: specialInstructions
+      orderByDirections:
+        enableAll: true
+    - fieldName: status
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: servicesboarding
+    selectUniques:
+      - queryRootField: servicesboardingById
+        uniqueIdentifier:
+          - id
+    orderByExpressionType: servicesBoardingOrderBy
+    filterInputTypeName: servicesBoardingFilterInput
+    aggregate:
+      queryRootField: servicesboardingAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Boarding
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

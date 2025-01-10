@@ -1,0 +1,173 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AccessFobs
+  fields:
+    - name: deactivatedAt
+      type: Timestamp
+    - name: fobId
+      type: Uuid!
+    - name: issuedAt
+      type: Timestamp
+    - name: locationId
+      type: Uuid!
+    - name: userId
+      type: Uuid!
+  graphql:
+    typeName: appAccessFobs
+    inputTypeName: appAccessFobsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: facilities_pg
+      dataConnectorObjectType: access_fobs
+      fieldMapping:
+        deactivatedAt:
+          column:
+            name: deactivated_at
+        fobId:
+          column:
+            name: fob_id
+        issuedAt:
+          column:
+            name: issued_at
+        locationId:
+          column:
+            name: location_id
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AccessFobs
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - deactivatedAt
+          - fobId
+          - issuedAt
+          - locationId
+          - userId
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AccessFobsAggExp
+  operand:
+    object:
+      aggregatedType: AccessFobs
+      aggregatableFields:
+        - fieldName: deactivatedAt
+          aggregateExpression: TimestampAggExp
+        - fieldName: fobId
+          aggregateExpression: UuidAggExp
+        - fieldName: issuedAt
+          aggregateExpression: TimestampAggExp
+        - fieldName: locationId
+          aggregateExpression: UuidAggExp
+        - fieldName: userId
+          aggregateExpression: UuidAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: appAccessFobsAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AccessFobs
+  objectType: AccessFobs
+  source:
+    dataConnectorName: facilities_pg
+    collection: access_fobs
+  filterExpressionType: AccessFobsBoolExp
+  aggregateExpression: AccessFobsAggExp
+  orderableFields:
+    - fieldName: deactivatedAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: fobId
+      orderByDirections:
+        enableAll: true
+    - fieldName: issuedAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: locationId
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: appaccessFobs
+    selectUniques:
+      - queryRootField: appaccessFobsByFobId
+        uniqueIdentifier:
+          - fobId
+    orderByExpressionType: appAccessFobsOrderBy
+    filterInputTypeName: appAccessFobsFilterInput
+    aggregate:
+      queryRootField: appaccessFobsAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AccessFobs
+  permissions:
+    - role: admin
+      select:
+        filter: null
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: location
+  sourceType: AccessFobs
+  target:
+    model:
+      name: Locations
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: locationId
+      target:
+        modelField:
+          - fieldName: locationId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AccessFobsBoolExp
+  operand:
+    object:
+      type: AccessFobs
+      comparableFields:
+        - fieldName: deactivatedAt
+          booleanExpressionType: TimestampBoolExp
+        - fieldName: fobId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: issuedAt
+          booleanExpressionType: TimestampBoolExp
+        - fieldName: locationId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: userId
+          booleanExpressionType: UuidBoolExp
+      comparableRelationships:
+        - relationshipName: location
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: appAccessFobsBoolExp
+

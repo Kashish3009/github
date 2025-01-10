@@ -1,0 +1,533 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnPayrollBonuses
+  description: Update the 'bonuses' column in the 'payroll' collection
+  fields:
+    - name: set
+      type: Numeric
+      description: Set the column to this value
+  graphql:
+    typeName: personnelUpdateColumnPayrollBonuses
+    inputTypeName: personnelUpdateColumnPayrollBonusesInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: personnel_pg
+      dataConnectorObjectType: update_column_payroll_bonuses
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnPayrollBonuses
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnPayrollDeductions
+  description: Update the 'deductions' column in the 'payroll' collection
+  fields:
+    - name: set
+      type: Numeric
+      description: Set the column to this value
+  graphql:
+    typeName: personnelUpdateColumnPayrollDeductions
+    inputTypeName: personnelUpdateColumnPayrollDeductionsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: personnel_pg
+      dataConnectorObjectType: update_column_payroll_deductions
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnPayrollDeductions
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnPayrollEmployeeId
+  description: Update the 'employee_id' column in the 'payroll' collection
+  fields:
+    - name: set
+      type: Uuid!
+      description: Set the column to this value
+  graphql:
+    typeName: personnelUpdateColumnPayrollEmployeeId
+    inputTypeName: personnelUpdateColumnPayrollEmployeeIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: personnel_pg
+      dataConnectorObjectType: update_column_payroll_employee_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnPayrollEmployeeId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnPayrollGrossSalary
+  description: Update the 'gross_salary' column in the 'payroll' collection
+  fields:
+    - name: set
+      type: Numeric!
+      description: Set the column to this value
+  graphql:
+    typeName: personnelUpdateColumnPayrollGrossSalary
+    inputTypeName: personnelUpdateColumnPayrollGrossSalaryInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: personnel_pg
+      dataConnectorObjectType: update_column_payroll_gross_salary
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnPayrollGrossSalary
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnPayrollNetSalary
+  description: Update the 'net_salary' column in the 'payroll' collection
+  fields:
+    - name: set
+      type: Numeric!
+      description: Set the column to this value
+  graphql:
+    typeName: personnelUpdateColumnPayrollNetSalary
+    inputTypeName: personnelUpdateColumnPayrollNetSalaryInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: personnel_pg
+      dataConnectorObjectType: update_column_payroll_net_salary
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnPayrollNetSalary
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnPayrollPayPeriodEnd
+  description: Update the 'pay_period_end' column in the 'payroll' collection
+  fields:
+    - name: set
+      type: Date!
+      description: Set the column to this value
+  graphql:
+    typeName: personnelUpdateColumnPayrollPayPeriodEnd
+    inputTypeName: personnelUpdateColumnPayrollPayPeriodEndInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: personnel_pg
+      dataConnectorObjectType: update_column_payroll_pay_period_end
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnPayrollPayPeriodEnd
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnPayrollPayPeriodStart
+  description: Update the 'pay_period_start' column in the 'payroll' collection
+  fields:
+    - name: set
+      type: Date!
+      description: Set the column to this value
+  graphql:
+    typeName: personnelUpdateColumnPayrollPayPeriodStart
+    inputTypeName: personnelUpdateColumnPayrollPayPeriodStartInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: personnel_pg
+      dataConnectorObjectType: update_column_payroll_pay_period_start
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnPayrollPayPeriodStart
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnPayrollPaymentDate
+  description: Update the 'payment_date' column in the 'payroll' collection
+  fields:
+    - name: set
+      type: Date!
+      description: Set the column to this value
+  graphql:
+    typeName: personnelUpdateColumnPayrollPaymentDate
+    inputTypeName: personnelUpdateColumnPayrollPaymentDateInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: personnel_pg
+      dataConnectorObjectType: update_column_payroll_payment_date
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnPayrollPaymentDate
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnPayrollPaymentMethod
+  description: Update the 'payment_method' column in the 'payroll' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: personnelUpdateColumnPayrollPaymentMethod
+    inputTypeName: personnelUpdateColumnPayrollPaymentMethodInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: personnel_pg
+      dataConnectorObjectType: update_column_payroll_payment_method
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnPayrollPaymentMethod
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnPayrollPayrollId
+  description: Update the 'payroll_id' column in the 'payroll' collection
+  fields:
+    - name: set
+      type: Uuid!
+      description: Set the column to this value
+  graphql:
+    typeName: personnelUpdateColumnPayrollPayrollId
+    inputTypeName: personnelUpdateColumnPayrollPayrollIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: personnel_pg
+      dataConnectorObjectType: update_column_payroll_payroll_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnPayrollPayrollId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnPayrollTaxes
+  description: Update the 'taxes' column in the 'payroll' collection
+  fields:
+    - name: set
+      type: Numeric!
+      description: Set the column to this value
+  graphql:
+    typeName: personnelUpdateColumnPayrollTaxes
+    inputTypeName: personnelUpdateColumnPayrollTaxesInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: personnel_pg
+      dataConnectorObjectType: update_column_payroll_taxes
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnPayrollTaxes
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdatePayrollByPayrollIdUpdateColumns
+  description: Update the columns of the 'payroll' collection
+  fields:
+    - name: bonuses
+      type: UpdateColumnPayrollBonuses
+      description: Update the 'bonuses' column in the 'payroll' collection.
+    - name: deductions
+      type: UpdateColumnPayrollDeductions
+      description: Update the 'deductions' column in the 'payroll' collection.
+    - name: employeeId
+      type: UpdateColumnPayrollEmployeeId
+      description: Update the 'employee_id' column in the 'payroll' collection.
+    - name: grossSalary
+      type: UpdateColumnPayrollGrossSalary
+      description: Update the 'gross_salary' column in the 'payroll' collection.
+    - name: netSalary
+      type: UpdateColumnPayrollNetSalary
+      description: Update the 'net_salary' column in the 'payroll' collection.
+    - name: payPeriodEnd
+      type: UpdateColumnPayrollPayPeriodEnd
+      description: Update the 'pay_period_end' column in the 'payroll' collection.
+    - name: payPeriodStart
+      type: UpdateColumnPayrollPayPeriodStart
+      description: Update the 'pay_period_start' column in the 'payroll' collection.
+    - name: paymentDate
+      type: UpdateColumnPayrollPaymentDate
+      description: Update the 'payment_date' column in the 'payroll' collection.
+    - name: paymentMethod
+      type: UpdateColumnPayrollPaymentMethod
+      description: Update the 'payment_method' column in the 'payroll' collection.
+    - name: payrollId
+      type: UpdateColumnPayrollPayrollId
+      description: Update the 'payroll_id' column in the 'payroll' collection.
+    - name: taxes
+      type: UpdateColumnPayrollTaxes
+      description: Update the 'taxes' column in the 'payroll' collection.
+  graphql:
+    typeName: personnelUpdatePayrollByPayrollIdUpdateColumns
+    inputTypeName: personnelUpdatePayrollByPayrollIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: personnel_pg
+      dataConnectorObjectType: update_payroll_by_payroll_id_update_columns
+      fieldMapping:
+        bonuses:
+          column:
+            name: bonuses
+        deductions:
+          column:
+            name: deductions
+        employeeId:
+          column:
+            name: employee_id
+        grossSalary:
+          column:
+            name: gross_salary
+        netSalary:
+          column:
+            name: net_salary
+        payPeriodEnd:
+          column:
+            name: pay_period_end
+        payPeriodStart:
+          column:
+            name: pay_period_start
+        paymentDate:
+          column:
+            name: payment_date
+        paymentMethod:
+          column:
+            name: payment_method
+        payrollId:
+          column:
+            name: payroll_id
+        taxes:
+          column:
+            name: taxes
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdatePayrollByPayrollIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - bonuses
+          - deductions
+          - employeeId
+          - grossSalary
+          - netSalary
+          - payPeriodEnd
+          - payPeriodStart
+          - paymentDate
+          - paymentMethod
+          - payrollId
+          - taxes
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdatePayrollByPayrollIdResponse
+  description: Responses from the 'update_payroll_by_payroll_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[Payroll!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: personnelUpdatePayrollByPayrollIdResponse
+    inputTypeName: personnelUpdatePayrollByPayrollIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: personnel_pg
+      dataConnectorObjectType: update_payroll_by_payroll_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdatePayrollByPayrollIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdatePayrollByPayrollId
+  outputType: UpdatePayrollByPayrollIdResponse!
+  arguments:
+    - name: keyPayrollId
+      type: Uuid!
+    - name: postCheck
+      type: PayrollBoolExp
+      description: Update permission post-condition predicate over the 'payroll' collection
+    - name: preCheck
+      type: PayrollBoolExp
+      description: Update permission pre-condition predicate over the 'payroll' collection
+    - name: updateColumns
+      type: UpdatePayrollByPayrollIdUpdateColumns!
+  source:
+    dataConnectorName: personnel_pg
+    dataConnectorCommand:
+      procedure: update_payroll_by_payroll_id
+    argumentMapping:
+      keyPayrollId: key_payroll_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: personnelupdatePayrollByPayrollId
+    rootFieldKind: Mutation
+  description: Update any row on the 'payroll' collection using the 'payroll_id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdatePayrollByPayrollId
+  permissions:
+    - role: admin
+      allowExecution: true
+

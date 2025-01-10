@@ -1,0 +1,47 @@
+# receivers:
+#   otlp:
+#     protocols:
+#       grpc:
+#         endpoint: 0.0.0.0:4317
+#       http:
+#         endpoint: 0.0.0.0:4318
+
+# exporters:
+#   prometheus:
+#     endpoint: "0.0.0.0:8889"
+
+#   logging:
+#     verbosity: detailed
+
+#   datadog:
+#     api:
+#       key: ba54eed05cedc1f2cbdab03b244c5416
+#     site: datadoghq.com # Change to datadoghq.eu for EU region if needed
+
+# processors:
+#   batch:
+#     send_batch_max_size: 100
+#     send_batch_size: 10
+#     timeout: 10s
+
+#   memory_limiter:
+#     check_interval: 1s
+#     limit_percentage: 65
+#     spike_limit_percentage: 20
+
+# service:
+#   pipelines:
+#     traces:
+#       receivers: [otlp]
+#       processors: [memory_limiter, batch]
+#       exporters: [datadog]
+
+#     logs:
+#       receivers: [otlp]
+#       processors: [memory_limiter, batch]
+#       exporters: [datadog]
+
+#     metrics:
+#       receivers: [otlp]
+#       processors: [memory_limiter, batch]
+#       exporters: [datadog]

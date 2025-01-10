@@ -1,0 +1,20 @@
+kind: Connector
+version: v2
+definition:
+  name: facilities_ch
+  subgraph: app
+  source: hasura/clickhouse:v1.0.3
+  context: .
+  envMapping:
+    CLICKHOUSE_PASSWORD:
+      fromEnv: APP_FACILITIES_CH_CLICKHOUSE_PASSWORD
+    CLICKHOUSE_URL:
+      fromEnv: APP_FACILITIES_CH_CLICKHOUSE_URL
+    CLICKHOUSE_USERNAME:
+      fromEnv: APP_FACILITIES_CH_CLICKHOUSE_USERNAME
+    HASURA_SERVICE_TOKEN_SECRET:
+      fromEnv: APP_FACILITIES_CH_HASURA_SERVICE_TOKEN_SECRET
+    OTEL_EXPORTER_OTLP_ENDPOINT:
+      fromEnv: APP_FACILITIES_CH_OTEL_EXPORTER_OTLP_ENDPOINT
+    OTEL_SERVICE_NAME:
+      fromEnv: APP_FACILITIES_CH_OTEL_SERVICE_NAME

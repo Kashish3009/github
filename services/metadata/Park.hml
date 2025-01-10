@@ -1,0 +1,180 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Park
+  fields:
+    - name: id
+      type: ObjectId!
+    - name: dogId
+      type: String
+    - name: durationMinutes
+      type: Int
+    - name: parkVisitId
+      type: String
+    - name: status
+      type: String
+    - name: userId
+      type: String
+    - name: visitDate
+      type: String
+  graphql:
+    typeName: servicesPark
+    inputTypeName: servicesParkInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: services_mongo
+      dataConnectorObjectType: park
+      fieldMapping:
+        id:
+          column:
+            name: _id
+        dogId:
+          column:
+            name: dog_id
+        durationMinutes:
+          column:
+            name: duration_minutes
+        parkVisitId:
+          column:
+            name: park_visit_id
+        status:
+          column:
+            name: status
+        userId:
+          column:
+            name: user_id
+        visitDate:
+          column:
+            name: visit_date
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Park
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - dogId
+          - durationMinutes
+          - parkVisitId
+          - status
+          - userId
+          - visitDate
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: ParkBoolExp
+  operand:
+    object:
+      type: Park
+      comparableFields:
+        - fieldName: id
+          booleanExpressionType: ObjectIdBoolExp
+        - fieldName: dogId
+          booleanExpressionType: StringBoolExp
+        - fieldName: durationMinutes
+          booleanExpressionType: IntBoolExp
+        - fieldName: parkVisitId
+          booleanExpressionType: StringBoolExp
+        - fieldName: status
+          booleanExpressionType: StringBoolExp
+        - fieldName: userId
+          booleanExpressionType: StringBoolExp
+        - fieldName: visitDate
+          booleanExpressionType: StringBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: servicesParkBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: ParkAggExp
+  operand:
+    object:
+      aggregatedType: Park
+      aggregatableFields:
+        - fieldName: id
+          aggregateExpression: ObjectIdAggExp
+        - fieldName: dogId
+          aggregateExpression: StringAggExp
+        - fieldName: durationMinutes
+          aggregateExpression: IntAggExp
+        - fieldName: parkVisitId
+          aggregateExpression: StringAggExp
+        - fieldName: status
+          aggregateExpression: StringAggExp
+        - fieldName: userId
+          aggregateExpression: StringAggExp
+        - fieldName: visitDate
+          aggregateExpression: StringAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: servicesParkAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Park
+  objectType: Park
+  source:
+    dataConnectorName: services_mongo
+    collection: park
+  filterExpressionType: ParkBoolExp
+  aggregateExpression: ParkAggExp
+  orderableFields:
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: dogId
+      orderByDirections:
+        enableAll: true
+    - fieldName: durationMinutes
+      orderByDirections:
+        enableAll: true
+    - fieldName: parkVisitId
+      orderByDirections:
+        enableAll: true
+    - fieldName: status
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+    - fieldName: visitDate
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: servicespark
+    selectUniques:
+      - queryRootField: servicesparkById
+        uniqueIdentifier:
+          - id
+    orderByExpressionType: servicesParkOrderBy
+    filterInputTypeName: servicesParkFilterInput
+    aggregate:
+      queryRootField: servicesparkAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Park
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

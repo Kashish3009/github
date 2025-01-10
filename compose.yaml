@@ -1,0 +1,62 @@
+include:
+  - path: app/connector/facilities_pg/compose.yaml
+  - path: app/connector/facilities_ch/compose.yaml
+  - path: clients/connector/clients_mongo/compose.yaml
+  - path: personnel/connector/personnel_pg/compose.yaml
+  - path: services/connector/services_mongo/compose.yaml
+services:
+  engine:
+    build:
+      context: engine
+      dockerfile_inline: |-
+        FROM ghcr.io/hasura/v3-engine
+        COPY ./build /md/
+    develop:
+      watch:
+        - action: sync+restart
+          path: engine/build
+          target: /md/
+    env_file:
+      - engine/.env.engine
+    extra_hosts:
+      - local.hasura.dev=host-gateway
+    ports:
+      - mode: ingress
+        protocol: tcp
+        published: "3000"
+        target: 3000
+  # otel-collector:
+  #   command:
+  #     - --config=/etc/otel-collector-config.yaml
+  #   environment:
+  #     HASURA_DDN_PAT: ${HASURA_DDN_PAT}
+  #   image: otel/opentelemetry-collector:0.104.0
+  #   ports:
+  #     - mode: ingress
+  #       protocol: tcp
+  #       published: "4317"
+  #       target: 4317
+  #     - mode: ingress
+  #       protocol: tcp
+  #       published: "4318"
+  #       target: 4318
+  #   volumes:
+  #     - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
+
+  caching:
+    build:
+      context: https://github.com/hasura/engine-plugin-caching.git
+    ports:
+      - 8787:8787
+    environment:
+      CACHING_PLUGIN_SECRET: "zZkhKqFjqXR4g5MZCsJUZCnhCcoPyZ"
+      CACHING_PLUGIN_REDIS_URL: "redis://local.hasura.dev:6379"
+    extra_hosts:
+      - local.hasura.dev=host-gateway
+    volumes:
+      - /c/ddn-quickstart/globals/plugins/caching-config.js:/app/src/config.js

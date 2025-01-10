@@ -1,0 +1,261 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DogsVaccinationRecords
+  fields:
+    - name: dateAdministered
+      type: String
+    - name: vaccineName
+      type: String
+  graphql:
+    typeName: clientsDogsVaccinationRecords
+    inputTypeName: clientsDogsVaccinationRecordsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: clients_mongo
+      dataConnectorObjectType: dogs_vaccination_records
+      fieldMapping:
+        dateAdministered:
+          column:
+            name: date_administered
+        vaccineName:
+          column:
+            name: vaccine_name
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DogsVaccinationRecords
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - dateAdministered
+          - vaccineName
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Dogs
+  fields:
+    - name: id
+      type: ObjectId!
+    - name: age
+      type: Int
+    - name: breed
+      type: String
+    - name: createdAt
+      type: String
+    - name: dogId
+      type: String
+    - name: name
+      type: String
+    - name: updatedAt
+      type: String
+    - name: userId
+      type: String
+    - name: vaccinationRecords
+      type: "[DogsVaccinationRecords!]"
+  graphql:
+    typeName: clientsDogs
+    inputTypeName: clientsDogsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: clients_mongo
+      dataConnectorObjectType: dogs
+      fieldMapping:
+        id:
+          column:
+            name: _id
+        age:
+          column:
+            name: age
+        breed:
+          column:
+            name: breed
+        createdAt:
+          column:
+            name: created_at
+        dogId:
+          column:
+            name: dog_id
+        name:
+          column:
+            name: name
+        updatedAt:
+          column:
+            name: updated_at
+        userId:
+          column:
+            name: user_id
+        vaccinationRecords:
+          column:
+            name: vaccination_records
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Dogs
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - age
+          - breed
+          - createdAt
+          - dogId
+          - name
+          - updatedAt
+          - userId
+          - vaccinationRecords
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: DogsVaccinationRecordsBoolExp
+  operand:
+    object:
+      type: DogsVaccinationRecords
+      comparableFields:
+        - fieldName: dateAdministered
+          booleanExpressionType: StringBoolExp
+        - fieldName: vaccineName
+          booleanExpressionType: StringBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: clientsDogsVaccinationRecordsBoolExp
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: DogsBoolExp
+  operand:
+    object:
+      type: Dogs
+      comparableFields:
+        - fieldName: id
+          booleanExpressionType: ObjectIdBoolExp
+        - fieldName: age
+          booleanExpressionType: IntBoolExp
+        - fieldName: breed
+          booleanExpressionType: StringBoolExp
+        - fieldName: createdAt
+          booleanExpressionType: StringBoolExp
+        - fieldName: dogId
+          booleanExpressionType: StringBoolExp
+        - fieldName: name
+          booleanExpressionType: StringBoolExp
+        - fieldName: updatedAt
+          booleanExpressionType: StringBoolExp
+        - fieldName: userId
+          booleanExpressionType: StringBoolExp
+        - fieldName: vaccinationRecords
+          booleanExpressionType: DogsVaccinationRecordsBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: clientsDogsBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: DogsAggExp
+  operand:
+    object:
+      aggregatedType: Dogs
+      aggregatableFields:
+        - fieldName: id
+          aggregateExpression: ObjectIdAggExp
+        - fieldName: age
+          aggregateExpression: IntAggExp
+        - fieldName: breed
+          aggregateExpression: StringAggExp
+        - fieldName: createdAt
+          aggregateExpression: StringAggExp
+        - fieldName: dogId
+          aggregateExpression: StringAggExp
+        - fieldName: name
+          aggregateExpression: StringAggExp
+        - fieldName: updatedAt
+          aggregateExpression: StringAggExp
+        - fieldName: userId
+          aggregateExpression: StringAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: clientsDogsAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Dogs
+  objectType: Dogs
+  source:
+    dataConnectorName: clients_mongo
+    collection: dogs
+  filterExpressionType: DogsBoolExp
+  aggregateExpression: DogsAggExp
+  orderableFields:
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: age
+      orderByDirections:
+        enableAll: true
+    - fieldName: breed
+      orderByDirections:
+        enableAll: true
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: dogId
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: updatedAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+    - fieldName: vaccinationRecords
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: clientsdogs
+    selectUniques:
+      - queryRootField: clientsdogsById
+        uniqueIdentifier:
+          - id
+    orderByExpressionType: clientsDogsOrderBy
+    filterInputTypeName: clientsDogsFilterInput
+    aggregate:
+      queryRootField: clientsdogsAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Dogs
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

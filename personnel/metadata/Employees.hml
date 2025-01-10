@@ -1,0 +1,349 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Employees
+  fields:
+    - name: address
+      type: Varchar
+    - name: city
+      type: Varchar
+    - name: country
+      type: Varchar
+    - name: createdAt
+      type: Timestamp
+    - name: department
+      type: Varchar
+    - name: email
+      type: Varchar!
+    - name: employeeId
+      type: Uuid!
+    - name: firstName
+      type: Varchar!
+    - name: hireDate
+      type: Date!
+    - name: lastName
+      type: Varchar!
+    - name: locationId
+      type: Uuid
+    - name: phone
+      type: Varchar
+    - name: position
+      type: Varchar!
+    - name: postalCode
+      type: Varchar
+    - name: state
+      type: Varchar
+    - name: status
+      type: Varchar
+    - name: terminationDate
+      type: Date
+    - name: updatedAt
+      type: Timestamp
+  graphql:
+    typeName: personnelEmployees
+    inputTypeName: personnelEmployeesInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: personnel_pg
+      dataConnectorObjectType: employees
+      fieldMapping:
+        address:
+          column:
+            name: address
+        city:
+          column:
+            name: city
+        country:
+          column:
+            name: country
+        createdAt:
+          column:
+            name: created_at
+        department:
+          column:
+            name: department
+        email:
+          column:
+            name: email
+        employeeId:
+          column:
+            name: employee_id
+        firstName:
+          column:
+            name: first_name
+        hireDate:
+          column:
+            name: hire_date
+        lastName:
+          column:
+            name: last_name
+        locationId:
+          column:
+            name: location_id
+        phone:
+          column:
+            name: phone
+        position:
+          column:
+            name: position
+        postalCode:
+          column:
+            name: postal_code
+        state:
+          column:
+            name: state
+        status:
+          column:
+            name: status
+        terminationDate:
+          column:
+            name: termination_date
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Employees
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - address
+          - city
+          - country
+          - createdAt
+          - department
+          - email
+          - employeeId
+          - firstName
+          - hireDate
+          - lastName
+          - locationId
+          - phone
+          - position
+          - postalCode
+          - state
+          - status
+          - terminationDate
+          - updatedAt
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: EmployeesAggExp
+  operand:
+    object:
+      aggregatedType: Employees
+      aggregatableFields:
+        - fieldName: address
+          aggregateExpression: VarcharAggExp
+        - fieldName: city
+          aggregateExpression: VarcharAggExp
+        - fieldName: country
+          aggregateExpression: VarcharAggExp
+        - fieldName: createdAt
+          aggregateExpression: TimestampAggExp
+        - fieldName: department
+          aggregateExpression: VarcharAggExp
+        - fieldName: email
+          aggregateExpression: VarcharAggExp
+        - fieldName: employeeId
+          aggregateExpression: UuidAggExp
+        - fieldName: firstName
+          aggregateExpression: VarcharAggExp
+        - fieldName: hireDate
+          aggregateExpression: DateAggExp
+        - fieldName: lastName
+          aggregateExpression: VarcharAggExp
+        - fieldName: locationId
+          aggregateExpression: UuidAggExp
+        - fieldName: phone
+          aggregateExpression: VarcharAggExp
+        - fieldName: position
+          aggregateExpression: VarcharAggExp
+        - fieldName: postalCode
+          aggregateExpression: VarcharAggExp
+        - fieldName: state
+          aggregateExpression: VarcharAggExp
+        - fieldName: status
+          aggregateExpression: VarcharAggExp
+        - fieldName: terminationDate
+          aggregateExpression: DateAggExp
+        - fieldName: updatedAt
+          aggregateExpression: TimestampAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: personnelEmployeesAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Employees
+  objectType: Employees
+  source:
+    dataConnectorName: personnel_pg
+    collection: employees
+  filterExpressionType: EmployeesBoolExp
+  aggregateExpression: EmployeesAggExp
+  orderableFields:
+    - fieldName: address
+      orderByDirections:
+        enableAll: true
+    - fieldName: city
+      orderByDirections:
+        enableAll: true
+    - fieldName: country
+      orderByDirections:
+        enableAll: true
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: department
+      orderByDirections:
+        enableAll: true
+    - fieldName: email
+      orderByDirections:
+        enableAll: true
+    - fieldName: employeeId
+      orderByDirections:
+        enableAll: true
+    - fieldName: firstName
+      orderByDirections:
+        enableAll: true
+    - fieldName: hireDate
+      orderByDirections:
+        enableAll: true
+    - fieldName: lastName
+      orderByDirections:
+        enableAll: true
+    - fieldName: locationId
+      orderByDirections:
+        enableAll: true
+    - fieldName: phone
+      orderByDirections:
+        enableAll: true
+    - fieldName: position
+      orderByDirections:
+        enableAll: true
+    - fieldName: postalCode
+      orderByDirections:
+        enableAll: true
+    - fieldName: state
+      orderByDirections:
+        enableAll: true
+    - fieldName: status
+      orderByDirections:
+        enableAll: true
+    - fieldName: terminationDate
+      orderByDirections:
+        enableAll: true
+    - fieldName: updatedAt
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: personnelemployees
+    selectUniques:
+      - queryRootField: personnelemployeesByEmail
+        uniqueIdentifier:
+          - email
+      - queryRootField: personnelemployeesByEmployeeId
+        uniqueIdentifier:
+          - employeeId
+    orderByExpressionType: personnelEmployeesOrderBy
+    filterInputTypeName: personnelEmployeesFilterInput
+    aggregate:
+      queryRootField: personnelemployeesAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Employees
+  permissions:
+    - role: admin
+      select:
+        filter: null
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: payrolls
+  sourceType: Employees
+  target:
+    model:
+      name: Payroll
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: PayrollAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: employeeId
+      target:
+        modelField:
+          - fieldName: employeeId
+  graphql:
+    aggregateFieldName: payrollsAggregate
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: EmployeesBoolExp
+  operand:
+    object:
+      type: Employees
+      comparableFields:
+        - fieldName: address
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: city
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: country
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: createdAt
+          booleanExpressionType: TimestampBoolExp
+        - fieldName: department
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: email
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: employeeId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: firstName
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: hireDate
+          booleanExpressionType: DateBoolExp
+        - fieldName: lastName
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: locationId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: phone
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: position
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: postalCode
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: state
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: status
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: terminationDate
+          booleanExpressionType: DateBoolExp
+        - fieldName: updatedAt
+          booleanExpressionType: TimestampBoolExp
+      comparableRelationships:
+        - relationshipName: payrolls
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: personnelEmployeesBoolExp
+

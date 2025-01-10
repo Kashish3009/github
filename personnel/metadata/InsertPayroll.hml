@@ -1,0 +1,162 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertPayrollObject
+  fields:
+    - name: bonuses
+      type: Numeric
+    - name: deductions
+      type: Numeric
+    - name: employeeId
+      type: Uuid!
+    - name: grossSalary
+      type: Numeric!
+    - name: netSalary
+      type: Numeric!
+    - name: payPeriodEnd
+      type: Date!
+    - name: payPeriodStart
+      type: Date!
+    - name: paymentDate
+      type: Date!
+    - name: paymentMethod
+      type: Varchar
+    - name: payrollId
+      type: Uuid
+    - name: taxes
+      type: Numeric!
+  graphql:
+    typeName: personnelInsertPayrollObject
+    inputTypeName: personnelInsertPayrollObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: personnel_pg
+      dataConnectorObjectType: insert_payroll_object
+      fieldMapping:
+        bonuses:
+          column:
+            name: bonuses
+        deductions:
+          column:
+            name: deductions
+        employeeId:
+          column:
+            name: employee_id
+        grossSalary:
+          column:
+            name: gross_salary
+        netSalary:
+          column:
+            name: net_salary
+        payPeriodEnd:
+          column:
+            name: pay_period_end
+        payPeriodStart:
+          column:
+            name: pay_period_start
+        paymentDate:
+          column:
+            name: payment_date
+        paymentMethod:
+          column:
+            name: payment_method
+        payrollId:
+          column:
+            name: payroll_id
+        taxes:
+          column:
+            name: taxes
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertPayrollObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - bonuses
+          - deductions
+          - employeeId
+          - grossSalary
+          - netSalary
+          - payPeriodEnd
+          - payPeriodStart
+          - paymentDate
+          - paymentMethod
+          - payrollId
+          - taxes
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertPayrollResponse
+  description: Responses from the 'insert_payroll' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[Payroll!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: personnelInsertPayrollResponse
+    inputTypeName: personnelInsertPayrollResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: personnel_pg
+      dataConnectorObjectType: insert_payroll_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertPayrollResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertPayroll
+  outputType: InsertPayrollResponse!
+  arguments:
+    - name: objects
+      type: "[InsertPayrollObject!]!"
+    - name: postCheck
+      type: PayrollBoolExp
+      description: Insert permission predicate over the 'payroll' collection
+  source:
+    dataConnectorName: personnel_pg
+    dataConnectorCommand:
+      procedure: insert_payroll
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: personnelinsertPayroll
+    rootFieldKind: Mutation
+  description: Insert into the payroll table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertPayroll
+  permissions:
+    - role: admin
+      allowExecution: true
+

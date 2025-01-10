@@ -1,0 +1,264 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InvoicesLineItems
+  fields:
+    - name: description
+      type: String
+    - name: quantity
+      type: Int
+    - name: total
+      type: Double
+    - name: unitPrice
+      type: Double
+  graphql:
+    typeName: clientsInvoicesLineItems
+    inputTypeName: clientsInvoicesLineItemsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: clients_mongo
+      dataConnectorObjectType: invoices_line_items
+      fieldMapping:
+        description:
+          column:
+            name: description
+        quantity:
+          column:
+            name: quantity
+        total:
+          column:
+            name: total
+        unitPrice:
+          column:
+            name: unit_price
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InvoicesLineItems
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - description
+          - quantity
+          - total
+          - unitPrice
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Invoices
+  fields:
+    - name: id
+      type: ObjectId!
+    - name: amount
+      type: Double
+    - name: dateIssued
+      type: String
+    - name: dueDate
+      type: String
+    - name: invoiceId
+      type: String
+    - name: lineItems
+      type: "[InvoicesLineItems!]"
+    - name: status
+      type: String
+    - name: userId
+      type: String
+  graphql:
+    typeName: clientsInvoices
+    inputTypeName: clientsInvoicesInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: clients_mongo
+      dataConnectorObjectType: invoices
+      fieldMapping:
+        id:
+          column:
+            name: _id
+        amount:
+          column:
+            name: amount
+        dateIssued:
+          column:
+            name: date_issued
+        dueDate:
+          column:
+            name: due_date
+        invoiceId:
+          column:
+            name: invoice_id
+        lineItems:
+          column:
+            name: line_items
+        status:
+          column:
+            name: status
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Invoices
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - amount
+          - dateIssued
+          - dueDate
+          - invoiceId
+          - lineItems
+          - status
+          - userId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: InvoicesLineItemsBoolExp
+  operand:
+    object:
+      type: InvoicesLineItems
+      comparableFields:
+        - fieldName: description
+          booleanExpressionType: StringBoolExp
+        - fieldName: quantity
+          booleanExpressionType: IntBoolExp
+        - fieldName: total
+          booleanExpressionType: DoubleBoolExp
+        - fieldName: unitPrice
+          booleanExpressionType: DoubleBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: clientsInvoicesLineItemsBoolExp
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: InvoicesBoolExp
+  operand:
+    object:
+      type: Invoices
+      comparableFields:
+        - fieldName: id
+          booleanExpressionType: ObjectIdBoolExp
+        - fieldName: amount
+          booleanExpressionType: DoubleBoolExp
+        - fieldName: dateIssued
+          booleanExpressionType: StringBoolExp
+        - fieldName: dueDate
+          booleanExpressionType: StringBoolExp
+        - fieldName: invoiceId
+          booleanExpressionType: StringBoolExp
+        - fieldName: lineItems
+          booleanExpressionType: InvoicesLineItemsBoolExp
+        - fieldName: status
+          booleanExpressionType: StringBoolExp
+        - fieldName: userId
+          booleanExpressionType: StringBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: clientsInvoicesBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: InvoicesAggExp
+  operand:
+    object:
+      aggregatedType: Invoices
+      aggregatableFields:
+        - fieldName: id
+          aggregateExpression: ObjectIdAggExp
+        - fieldName: amount
+          aggregateExpression: DoubleAggExp
+        - fieldName: dateIssued
+          aggregateExpression: StringAggExp
+        - fieldName: dueDate
+          aggregateExpression: StringAggExp
+        - fieldName: invoiceId
+          aggregateExpression: StringAggExp
+        - fieldName: status
+          aggregateExpression: StringAggExp
+        - fieldName: userId
+          aggregateExpression: StringAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: clientsInvoicesAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Invoices
+  objectType: Invoices
+  source:
+    dataConnectorName: clients_mongo
+    collection: invoices
+  filterExpressionType: InvoicesBoolExp
+  aggregateExpression: InvoicesAggExp
+  orderableFields:
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: amount
+      orderByDirections:
+        enableAll: true
+    - fieldName: dateIssued
+      orderByDirections:
+        enableAll: true
+    - fieldName: dueDate
+      orderByDirections:
+        enableAll: true
+    - fieldName: invoiceId
+      orderByDirections:
+        enableAll: true
+    - fieldName: lineItems
+      orderByDirections:
+        enableAll: true
+    - fieldName: status
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: clientsinvoices
+    selectUniques:
+      - queryRootField: clientsinvoicesById
+        uniqueIdentifier:
+          - id
+    orderByExpressionType: clientsInvoicesOrderBy
+    filterInputTypeName: clientsInvoicesFilterInput
+    aggregate:
+      queryRootField: clientsinvoicesAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Invoices
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

@@ -1,0 +1,180 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Subscriptions
+  fields:
+    - name: id
+      type: ObjectId!
+    - name: autoRenew
+      type: Bool
+    - name: endDate
+      type: String
+    - name: plan
+      type: String
+    - name: startDate
+      type: String
+    - name: subscriptionId
+      type: String
+    - name: userId
+      type: String
+  graphql:
+    typeName: clientsSubscriptions
+    inputTypeName: clientsSubscriptionsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: clients_mongo
+      dataConnectorObjectType: subscriptions
+      fieldMapping:
+        id:
+          column:
+            name: _id
+        autoRenew:
+          column:
+            name: auto_renew
+        endDate:
+          column:
+            name: end_date
+        plan:
+          column:
+            name: plan
+        startDate:
+          column:
+            name: start_date
+        subscriptionId:
+          column:
+            name: subscription_id
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Subscriptions
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - autoRenew
+          - endDate
+          - plan
+          - startDate
+          - subscriptionId
+          - userId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: SubscriptionsBoolExp
+  operand:
+    object:
+      type: Subscriptions
+      comparableFields:
+        - fieldName: id
+          booleanExpressionType: ObjectIdBoolExp
+        - fieldName: autoRenew
+          booleanExpressionType: BoolBoolExp
+        - fieldName: endDate
+          booleanExpressionType: StringBoolExp
+        - fieldName: plan
+          booleanExpressionType: StringBoolExp
+        - fieldName: startDate
+          booleanExpressionType: StringBoolExp
+        - fieldName: subscriptionId
+          booleanExpressionType: StringBoolExp
+        - fieldName: userId
+          booleanExpressionType: StringBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: clientsSubscriptionsBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: SubscriptionsAggExp
+  operand:
+    object:
+      aggregatedType: Subscriptions
+      aggregatableFields:
+        - fieldName: id
+          aggregateExpression: ObjectIdAggExp
+        - fieldName: autoRenew
+          aggregateExpression: BoolAggExp
+        - fieldName: endDate
+          aggregateExpression: StringAggExp
+        - fieldName: plan
+          aggregateExpression: StringAggExp
+        - fieldName: startDate
+          aggregateExpression: StringAggExp
+        - fieldName: subscriptionId
+          aggregateExpression: StringAggExp
+        - fieldName: userId
+          aggregateExpression: StringAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: clientsSubscriptionsAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Subscriptions
+  objectType: Subscriptions
+  source:
+    dataConnectorName: clients_mongo
+    collection: subscriptions
+  filterExpressionType: SubscriptionsBoolExp
+  aggregateExpression: SubscriptionsAggExp
+  orderableFields:
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: autoRenew
+      orderByDirections:
+        enableAll: true
+    - fieldName: endDate
+      orderByDirections:
+        enableAll: true
+    - fieldName: plan
+      orderByDirections:
+        enableAll: true
+    - fieldName: startDate
+      orderByDirections:
+        enableAll: true
+    - fieldName: subscriptionId
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: clientssubscriptions
+    selectUniques:
+      - queryRootField: clientssubscriptionsById
+        uniqueIdentifier:
+          - id
+    orderByExpressionType: clientsSubscriptionsOrderBy
+    filterInputTypeName: clientsSubscriptionsFilterInput
+    aggregate:
+      queryRootField: clientssubscriptionsAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Subscriptions
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

@@ -1,0 +1,20 @@
+kind: Subgraph
+version: v2
+definition:
+  name: personnel
+  generator:
+    rootPath: .
+    graphqlRootFieldPrefix: personnel
+    graphqlTypeNamePrefix: personnel
+  includePaths:
+    - metadata
+  envMapping:
+    PERSONNEL_PERSONNEL_PG_AUTHORIZATION_HEADER:
+      fromEnv: PERSONNEL_PERSONNEL_PG_AUTHORIZATION_HEADER
+    PERSONNEL_PERSONNEL_PG_READ_URL:
+      fromEnv: PERSONNEL_PERSONNEL_PG_READ_URL
+    PERSONNEL_PERSONNEL_PG_WRITE_URL:
+      fromEnv: PERSONNEL_PERSONNEL_PG_WRITE_URL
+  connectors:
+    - path: connector/personnel_pg/connector.yaml
+      connectorLinkName: personnel_pg

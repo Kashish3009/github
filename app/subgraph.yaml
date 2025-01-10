@@ -1,0 +1,28 @@
+kind: Subgraph
+version: v2
+definition:
+  name: app
+  generator:
+    rootPath: .
+    graphqlRootFieldPrefix: app
+    graphqlTypeNamePrefix: app
+  includePaths:
+    - metadata
+  envMapping:
+    APP_FACILITIES_CH_AUTHORIZATION_HEADER:
+      fromEnv: APP_FACILITIES_CH_AUTHORIZATION_HEADER
+    APP_FACILITIES_CH_READ_URL:
+      fromEnv: APP_FACILITIES_CH_READ_URL
+    APP_FACILITIES_CH_WRITE_URL:
+      fromEnv: APP_FACILITIES_CH_WRITE_URL
+    APP_FACILITIES_PG_AUTHORIZATION_HEADER:
+      fromEnv: APP_FACILITIES_PG_AUTHORIZATION_HEADER
+    APP_FACILITIES_PG_READ_URL:
+      fromEnv: APP_FACILITIES_PG_READ_URL
+    APP_FACILITIES_PG_WRITE_URL:
+      fromEnv: APP_FACILITIES_PG_WRITE_URL
+  connectors:
+    - path: connector/facilities_pg/connector.yaml
+      connectorLinkName: facilities_pg
+    - path: connector/facilities_ch/connector.yaml
+      connectorLinkName: facilities_ch

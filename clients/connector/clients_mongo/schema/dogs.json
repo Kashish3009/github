@@ -1,0 +1,95 @@
+{
+  "name": "dogs",
+  "collections": {
+    "dogs": {
+      "type": "dogs"
+    }
+  },
+  "objectTypes": {
+    "dogs": {
+      "fields": {
+        "_id": {
+          "type": {
+            "scalar": "objectId"
+          }
+        },
+        "age": {
+          "type": {
+            "nullable": {
+              "scalar": "int"
+            }
+          }
+        },
+        "breed": {
+          "type": {
+            "nullable": {
+              "scalar": "string"
+            }
+          }
+        },
+        "created_at": {
+          "type": {
+            "nullable": {
+              "scalar": "string"
+            }
+          }
+        },
+        "dog_id": {
+          "type": {
+            "nullable": {
+              "scalar": "string"
+            }
+          }
+        },
+        "name": {
+          "type": {
+            "nullable": {
+              "scalar": "string"
+            }
+          }
+        },
+        "updated_at": {
+          "type": {
+            "nullable": {
+              "scalar": "string"
+            }
+          }
+        },
+        "user_id": {
+          "type": {
+            "nullable": {
+              "scalar": "string"
+            }
+          }
+        },
+        "vaccination_records": {
+          "type": {
+            "nullable": {
+              "arrayOf": {
+                "object": "dogs_vaccination_records"
+              }
+            }
+          }
+        }
+      }
+    },
+    "dogs_vaccination_records": {
+      "fields": {
+        "date_administered": {
+          "type": {
+            "nullable": {
+              "scalar": "string"
+            }
+          }
+        },
+        "vaccine_name": {
+          "type": {
+            "nullable": {
+              "scalar": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,231 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateEmployeesByEmployeeIdUpdateColumns
+  description: Update the columns of the 'employees' collection
+  fields:
+    - name: address
+      type: UpdateColumnEmployeesAddress
+      description: Update the 'address' column in the 'employees' collection.
+    - name: city
+      type: UpdateColumnEmployeesCity
+      description: Update the 'city' column in the 'employees' collection.
+    - name: country
+      type: UpdateColumnEmployeesCountry
+      description: Update the 'country' column in the 'employees' collection.
+    - name: createdAt
+      type: UpdateColumnEmployeesCreatedAt
+      description: Update the 'created_at' column in the 'employees' collection.
+    - name: department
+      type: UpdateColumnEmployeesDepartment
+      description: Update the 'department' column in the 'employees' collection.
+    - name: email
+      type: UpdateColumnEmployeesEmail
+      description: Update the 'email' column in the 'employees' collection.
+    - name: employeeId
+      type: UpdateColumnEmployeesEmployeeId
+      description: Update the 'employee_id' column in the 'employees' collection.
+    - name: firstName
+      type: UpdateColumnEmployeesFirstName
+      description: Update the 'first_name' column in the 'employees' collection.
+    - name: hireDate
+      type: UpdateColumnEmployeesHireDate
+      description: Update the 'hire_date' column in the 'employees' collection.
+    - name: lastName
+      type: UpdateColumnEmployeesLastName
+      description: Update the 'last_name' column in the 'employees' collection.
+    - name: locationId
+      type: UpdateColumnEmployeesLocationId
+      description: Update the 'location_id' column in the 'employees' collection.
+    - name: phone
+      type: UpdateColumnEmployeesPhone
+      description: Update the 'phone' column in the 'employees' collection.
+    - name: position
+      type: UpdateColumnEmployeesPosition
+      description: Update the 'position' column in the 'employees' collection.
+    - name: postalCode
+      type: UpdateColumnEmployeesPostalCode
+      description: Update the 'postal_code' column in the 'employees' collection.
+    - name: state
+      type: UpdateColumnEmployeesState
+      description: Update the 'state' column in the 'employees' collection.
+    - name: status
+      type: UpdateColumnEmployeesStatus
+      description: Update the 'status' column in the 'employees' collection.
+    - name: terminationDate
+      type: UpdateColumnEmployeesTerminationDate
+      description: Update the 'termination_date' column in the 'employees' collection.
+    - name: updatedAt
+      type: UpdateColumnEmployeesUpdatedAt
+      description: Update the 'updated_at' column in the 'employees' collection.
+  graphql:
+    typeName: personnelUpdateEmployeesByEmployeeIdUpdateColumns
+    inputTypeName: personnelUpdateEmployeesByEmployeeIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: personnel_pg
+      dataConnectorObjectType: update_employees_by_employee_id_update_columns
+      fieldMapping:
+        address:
+          column:
+            name: address
+        city:
+          column:
+            name: city
+        country:
+          column:
+            name: country
+        createdAt:
+          column:
+            name: created_at
+        department:
+          column:
+            name: department
+        email:
+          column:
+            name: email
+        employeeId:
+          column:
+            name: employee_id
+        firstName:
+          column:
+            name: first_name
+        hireDate:
+          column:
+            name: hire_date
+        lastName:
+          column:
+            name: last_name
+        locationId:
+          column:
+            name: location_id
+        phone:
+          column:
+            name: phone
+        position:
+          column:
+            name: position
+        postalCode:
+          column:
+            name: postal_code
+        state:
+          column:
+            name: state
+        status:
+          column:
+            name: status
+        terminationDate:
+          column:
+            name: termination_date
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateEmployeesByEmployeeIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - address
+          - city
+          - country
+          - createdAt
+          - department
+          - email
+          - employeeId
+          - firstName
+          - hireDate
+          - lastName
+          - locationId
+          - phone
+          - position
+          - postalCode
+          - state
+          - status
+          - terminationDate
+          - updatedAt
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateEmployeesByEmployeeIdResponse
+  description: Responses from the 'update_employees_by_employee_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[Employees!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: personnelUpdateEmployeesByEmployeeIdResponse
+    inputTypeName: personnelUpdateEmployeesByEmployeeIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: personnel_pg
+      dataConnectorObjectType: update_employees_by_employee_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateEmployeesByEmployeeIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateEmployeesByEmployeeId
+  outputType: UpdateEmployeesByEmployeeIdResponse!
+  arguments:
+    - name: keyEmployeeId
+      type: Uuid!
+    - name: postCheck
+      type: EmployeesBoolExp
+      description: Update permission post-condition predicate over the 'employees'
+        collection
+    - name: preCheck
+      type: EmployeesBoolExp
+      description: Update permission pre-condition predicate over the 'employees' collection
+    - name: updateColumns
+      type: UpdateEmployeesByEmployeeIdUpdateColumns!
+  source:
+    dataConnectorName: personnel_pg
+    dataConnectorCommand:
+      procedure: update_employees_by_employee_id
+    argumentMapping:
+      keyEmployeeId: key_employee_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: personnelupdateEmployeesByEmployeeId
+    rootFieldKind: Mutation
+  description: Update any row on the 'employees' collection using the 'employee_id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateEmployeesByEmployeeId
+  permissions:
+    - role: admin
+      allowExecution: true
+

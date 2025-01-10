@@ -1,0 +1,240 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: GroomingServices
+  fields:
+    - name: serviceName
+      type: String
+  graphql:
+    typeName: servicesGroomingServices
+    inputTypeName: servicesGroomingServicesInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: services_mongo
+      dataConnectorObjectType: grooming_services
+      fieldMapping:
+        serviceName:
+          column:
+            name: service_name
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: GroomingServices
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - serviceName
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Grooming
+  fields:
+    - name: id
+      type: ObjectId!
+    - name: appointmentDate
+      type: String
+    - name: dogId
+      type: String
+    - name: groomingId
+      type: String
+    - name: price
+      type: Double
+    - name: services
+      type: "[GroomingServices!]"
+    - name: status
+      type: String
+    - name: userId
+      type: String
+  graphql:
+    typeName: servicesGrooming
+    inputTypeName: servicesGroomingInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: services_mongo
+      dataConnectorObjectType: grooming
+      fieldMapping:
+        id:
+          column:
+            name: _id
+        appointmentDate:
+          column:
+            name: appointment_date
+        dogId:
+          column:
+            name: dog_id
+        groomingId:
+          column:
+            name: grooming_id
+        price:
+          column:
+            name: price
+        services:
+          column:
+            name: services
+        status:
+          column:
+            name: status
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Grooming
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - appointmentDate
+          - dogId
+          - groomingId
+          - price
+          - services
+          - status
+          - userId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: GroomingServicesBoolExp
+  operand:
+    object:
+      type: GroomingServices
+      comparableFields:
+        - fieldName: serviceName
+          booleanExpressionType: StringBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: servicesGroomingServicesBoolExp
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: GroomingBoolExp
+  operand:
+    object:
+      type: Grooming
+      comparableFields:
+        - fieldName: id
+          booleanExpressionType: ObjectIdBoolExp
+        - fieldName: appointmentDate
+          booleanExpressionType: StringBoolExp
+        - fieldName: dogId
+          booleanExpressionType: StringBoolExp
+        - fieldName: groomingId
+          booleanExpressionType: StringBoolExp
+        - fieldName: price
+          booleanExpressionType: DoubleBoolExp
+        - fieldName: services
+          booleanExpressionType: GroomingServicesBoolExp
+        - fieldName: status
+          booleanExpressionType: StringBoolExp
+        - fieldName: userId
+          booleanExpressionType: StringBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: servicesGroomingBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: GroomingAggExp
+  operand:
+    object:
+      aggregatedType: Grooming
+      aggregatableFields:
+        - fieldName: id
+          aggregateExpression: ObjectIdAggExp
+        - fieldName: appointmentDate
+          aggregateExpression: StringAggExp
+        - fieldName: dogId
+          aggregateExpression: StringAggExp
+        - fieldName: groomingId
+          aggregateExpression: StringAggExp
+        - fieldName: price
+          aggregateExpression: DoubleAggExp
+        - fieldName: status
+          aggregateExpression: StringAggExp
+        - fieldName: userId
+          aggregateExpression: StringAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: servicesGroomingAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Grooming
+  objectType: Grooming
+  source:
+    dataConnectorName: services_mongo
+    collection: grooming
+  filterExpressionType: GroomingBoolExp
+  aggregateExpression: GroomingAggExp
+  orderableFields:
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: appointmentDate
+      orderByDirections:
+        enableAll: true
+    - fieldName: dogId
+      orderByDirections:
+        enableAll: true
+    - fieldName: groomingId
+      orderByDirections:
+        enableAll: true
+    - fieldName: price
+      orderByDirections:
+        enableAll: true
+    - fieldName: services
+      orderByDirections:
+        enableAll: true
+    - fieldName: status
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: servicesgrooming
+    selectUniques:
+      - queryRootField: servicesgroomingById
+        uniqueIdentifier:
+          - id
+    orderByExpressionType: servicesGroomingOrderBy
+    filterInputTypeName: servicesGroomingFilterInput
+    aggregate:
+      queryRootField: servicesgroomingAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Grooming
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

@@ -1,0 +1,242 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Locations
+  fields:
+    - name: address
+      type: Varchar
+    - name: city
+      type: Varchar
+    - name: coordinates
+      type: Varchar
+    - name: country
+      type: Varchar
+    - name: createdAt
+      type: Timestamp
+    - name: locationId
+      type: Uuid!
+    - name: name
+      type: Varchar!
+    - name: postalCode
+      type: Varchar
+    - name: state
+      type: Varchar
+    - name: updatedAt
+      type: Timestamp
+  graphql:
+    typeName: appLocations
+    inputTypeName: appLocationsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: facilities_pg
+      dataConnectorObjectType: locations
+      fieldMapping:
+        address:
+          column:
+            name: address
+        city:
+          column:
+            name: city
+        coordinates:
+          column:
+            name: coordinates
+        country:
+          column:
+            name: country
+        createdAt:
+          column:
+            name: created_at
+        locationId:
+          column:
+            name: location_id
+        name:
+          column:
+            name: name
+        postalCode:
+          column:
+            name: postal_code
+        state:
+          column:
+            name: state
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Locations
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - address
+          - city
+          - coordinates
+          - country
+          - createdAt
+          - locationId
+          - name
+          - postalCode
+          - state
+          - updatedAt
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: LocationsAggExp
+  operand:
+    object:
+      aggregatedType: Locations
+      aggregatableFields:
+        - fieldName: address
+          aggregateExpression: VarcharAggExp
+        - fieldName: city
+          aggregateExpression: VarcharAggExp
+        - fieldName: coordinates
+          aggregateExpression: VarcharAggExp
+        - fieldName: country
+          aggregateExpression: VarcharAggExp
+        - fieldName: createdAt
+          aggregateExpression: TimestampAggExp
+        - fieldName: locationId
+          aggregateExpression: UuidAggExp
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: postalCode
+          aggregateExpression: VarcharAggExp
+        - fieldName: state
+          aggregateExpression: VarcharAggExp
+        - fieldName: updatedAt
+          aggregateExpression: TimestampAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: appLocationsAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Locations
+  objectType: Locations
+  source:
+    dataConnectorName: facilities_pg
+    collection: locations
+  filterExpressionType: LocationsBoolExp
+  aggregateExpression: LocationsAggExp
+  orderableFields:
+    - fieldName: address
+      orderByDirections:
+        enableAll: true
+    - fieldName: city
+      orderByDirections:
+        enableAll: true
+    - fieldName: coordinates
+      orderByDirections:
+        enableAll: true
+    - fieldName: country
+      orderByDirections:
+        enableAll: true
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: locationId
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: postalCode
+      orderByDirections:
+        enableAll: true
+    - fieldName: state
+      orderByDirections:
+        enableAll: true
+    - fieldName: updatedAt
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: applocations
+    selectUniques:
+      - queryRootField: applocationsByLocationId
+        uniqueIdentifier:
+          - locationId
+    orderByExpressionType: appLocationsOrderBy
+    filterInputTypeName: appLocationsFilterInput
+    aggregate:
+      queryRootField: applocationsAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Locations
+  permissions:
+    - role: admin
+      select:
+        filter: null
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: accessFobs
+  sourceType: Locations
+  target:
+    model:
+      name: AccessFobs
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AccessFobsAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: locationId
+      target:
+        modelField:
+          - fieldName: locationId
+  graphql:
+    aggregateFieldName: accessFobsAggregate
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: LocationsBoolExp
+  operand:
+    object:
+      type: Locations
+      comparableFields:
+        - fieldName: address
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: city
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: coordinates
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: country
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: createdAt
+          booleanExpressionType: TimestampBoolExp
+        - fieldName: locationId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: postalCode
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: state
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: updatedAt
+          booleanExpressionType: TimestampBoolExp
+      comparableRelationships:
+        - relationshipName: accessFobs
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: appLocationsBoolExp
+

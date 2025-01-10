@@ -1,0 +1,20 @@
+kind: Subgraph
+version: v2
+definition:
+  name: services
+  generator:
+    rootPath: .
+    graphqlRootFieldPrefix: services
+    graphqlTypeNamePrefix: services
+  includePaths:
+    - metadata
+  envMapping:
+    SERVICES_SERVICES_MONGO_AUTHORIZATION_HEADER:
+      fromEnv: SERVICES_SERVICES_MONGO_AUTHORIZATION_HEADER
+    SERVICES_SERVICES_MONGO_READ_URL:
+      fromEnv: SERVICES_SERVICES_MONGO_READ_URL
+    SERVICES_SERVICES_MONGO_WRITE_URL:
+      fromEnv: SERVICES_SERVICES_MONGO_WRITE_URL
+  connectors:
+    - path: connector/services_mongo/connector.yaml
+      connectorLinkName: services_mongo

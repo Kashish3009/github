@@ -1,0 +1,251 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Payroll
+  fields:
+    - name: bonuses
+      type: Numeric
+    - name: deductions
+      type: Numeric
+    - name: employeeId
+      type: Uuid!
+    - name: grossSalary
+      type: Numeric!
+    - name: netSalary
+      type: Numeric!
+    - name: payPeriodEnd
+      type: Date!
+    - name: payPeriodStart
+      type: Date!
+    - name: paymentDate
+      type: Date!
+    - name: paymentMethod
+      type: Varchar
+    - name: payrollId
+      type: Uuid!
+    - name: taxes
+      type: Numeric!
+  graphql:
+    typeName: personnelPayroll
+    inputTypeName: personnelPayrollInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: personnel_pg
+      dataConnectorObjectType: payroll
+      fieldMapping:
+        bonuses:
+          column:
+            name: bonuses
+        deductions:
+          column:
+            name: deductions
+        employeeId:
+          column:
+            name: employee_id
+        grossSalary:
+          column:
+            name: gross_salary
+        netSalary:
+          column:
+            name: net_salary
+        payPeriodEnd:
+          column:
+            name: pay_period_end
+        payPeriodStart:
+          column:
+            name: pay_period_start
+        paymentDate:
+          column:
+            name: payment_date
+        paymentMethod:
+          column:
+            name: payment_method
+        payrollId:
+          column:
+            name: payroll_id
+        taxes:
+          column:
+            name: taxes
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Payroll
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - bonuses
+          - deductions
+          - employeeId
+          - grossSalary
+          - netSalary
+          - payPeriodEnd
+          - payPeriodStart
+          - paymentDate
+          - paymentMethod
+          - payrollId
+          - taxes
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: PayrollAggExp
+  operand:
+    object:
+      aggregatedType: Payroll
+      aggregatableFields:
+        - fieldName: bonuses
+          aggregateExpression: NumericAggExp
+        - fieldName: deductions
+          aggregateExpression: NumericAggExp
+        - fieldName: employeeId
+          aggregateExpression: UuidAggExp
+        - fieldName: grossSalary
+          aggregateExpression: NumericAggExp
+        - fieldName: netSalary
+          aggregateExpression: NumericAggExp
+        - fieldName: payPeriodEnd
+          aggregateExpression: DateAggExp
+        - fieldName: payPeriodStart
+          aggregateExpression: DateAggExp
+        - fieldName: paymentDate
+          aggregateExpression: DateAggExp
+        - fieldName: paymentMethod
+          aggregateExpression: VarcharAggExp
+        - fieldName: payrollId
+          aggregateExpression: UuidAggExp
+        - fieldName: taxes
+          aggregateExpression: NumericAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: personnelPayrollAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Payroll
+  objectType: Payroll
+  source:
+    dataConnectorName: personnel_pg
+    collection: payroll
+  filterExpressionType: PayrollBoolExp
+  aggregateExpression: PayrollAggExp
+  orderableFields:
+    - fieldName: bonuses
+      orderByDirections:
+        enableAll: true
+    - fieldName: deductions
+      orderByDirections:
+        enableAll: true
+    - fieldName: employeeId
+      orderByDirections:
+        enableAll: true
+    - fieldName: grossSalary
+      orderByDirections:
+        enableAll: true
+    - fieldName: netSalary
+      orderByDirections:
+        enableAll: true
+    - fieldName: payPeriodEnd
+      orderByDirections:
+        enableAll: true
+    - fieldName: payPeriodStart
+      orderByDirections:
+        enableAll: true
+    - fieldName: paymentDate
+      orderByDirections:
+        enableAll: true
+    - fieldName: paymentMethod
+      orderByDirections:
+        enableAll: true
+    - fieldName: payrollId
+      orderByDirections:
+        enableAll: true
+    - fieldName: taxes
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: personnelpayroll
+    selectUniques:
+      - queryRootField: personnelpayrollByPayrollId
+        uniqueIdentifier:
+          - payrollId
+    orderByExpressionType: personnelPayrollOrderBy
+    filterInputTypeName: personnelPayrollFilterInput
+    aggregate:
+      queryRootField: personnelpayrollAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Payroll
+  permissions:
+    - role: admin
+      select:
+        filter: null
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: employee
+  sourceType: Payroll
+  target:
+    model:
+      name: Employees
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: employeeId
+      target:
+        modelField:
+          - fieldName: employeeId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: PayrollBoolExp
+  operand:
+    object:
+      type: Payroll
+      comparableFields:
+        - fieldName: bonuses
+          booleanExpressionType: NumericBoolExp
+        - fieldName: deductions
+          booleanExpressionType: NumericBoolExp
+        - fieldName: employeeId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: grossSalary
+          booleanExpressionType: NumericBoolExp
+        - fieldName: netSalary
+          booleanExpressionType: NumericBoolExp
+        - fieldName: payPeriodEnd
+          booleanExpressionType: DateBoolExp
+        - fieldName: payPeriodStart
+          booleanExpressionType: DateBoolExp
+        - fieldName: paymentDate
+          booleanExpressionType: DateBoolExp
+        - fieldName: paymentMethod
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: payrollId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: taxes
+          booleanExpressionType: NumericBoolExp
+      comparableRelationships:
+        - relationshipName: employee
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: personnelPayrollBoolExp
+
