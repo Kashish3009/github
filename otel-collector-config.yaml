@@ -15,7 +15,7 @@
 
 #   datadog:
 #     api:
-#       key: ba54eed05cedc1f2cbdab03b244c5416
+#       key: 
 #     site: datadoghq.com # Change to datadoghq.eu for EU region if needed
 
 # processors:
